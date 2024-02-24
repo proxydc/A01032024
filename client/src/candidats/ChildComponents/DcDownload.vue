@@ -25,12 +25,15 @@ import {
   VerticalPositionAlign,
   TextWrappingType,
   TextWrappingSide,
+  Table,
+  TableRow,
+  TableCell,
+  BorderStyle,
 } from "docx";
 import docData from "../../DocGeneration/tools/DocData"
 const FileSaver = require("file-saver");
 import urldc from "../../_helpers/urllist.js";
 import axios from "axios";
-//const fs = require("fs");
 import exppro from "../../DocGeneration/cExpPro";
 import expperso from "../../DocGeneration/cExpPerso";
 import comp from "../../DocGeneration/cComps";
@@ -68,8 +71,76 @@ export default {
       }
       console.log("docdata: " + this.dbDoc);
       let docjs = this.dbDoc.document;
+      const table = new Table({
+    rows: [
+        new TableRow({
+            children: [
+                new TableCell({
+                    children: [docData.LineBreak(),
+              comp.getSubTitle("Compétences fonctionnelles"),
+              comp.getComp(docjs.functionalAbilities),
+              docData.getHL(),
+
+              docData.LineBreak(),
+              comp.getSubTitle("Compétences techniques"),
+              comp.getComp(docjs.technicalAbilities),
+              docData.getHL(),],
+              borders: {
+        right: {
+            style: BorderStyle.DASH_DOT_STROKED,
+            size: 5,
+            color: "889900",
+        },
+        top: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
+          bottom: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
+          left: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
+          //right: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
+       /* bottom: {
+            style: BorderStyle.THICK_THIN_MEDIUM_GAP,
+            size: 5,
+            color: "889900",
+        },*/
+    },
+                }
+                
+                ),
+                new TableCell({
+                    children: [docData.LineBreak(),
+              comp.getSubTitle("Compétences fonctionnelles"),
+              comp.getComp(docjs.functionalAbilities),
+              docData.getHL(),
+
+              docData.LineBreak(),
+              comp.getSubTitle("Compétences techniques"),
+              comp.getComp(docjs.technicalAbilities),
+              docData.getHL(),],
+              borders: {
+        right: {
+            style: BorderStyle.DASH_DOT_STROKED,
+            size: 5,
+            color: "ff0000",
+        },
+        top: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
+          bottom: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
+          left: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
+          //right: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
+       /* bottom: {
+            style: BorderStyle.THICK_THIN_MEDIUM_GAP,
+            size: 5,
+            color: "889900",
+        },*/
+    },
+                }),
+            ],
+        }),
+    ],
+});
       const doc = new Document({
-        sections: [
+        sections: [{
+        children: [table],
+    }]
+
+        /*sections: [
           {
             properties: {
               titlePage: true,
@@ -91,9 +162,6 @@ export default {
                   //docData.getHL(),
                 ],
               }),
-              /* even: new Header({ // The header on even pages when the 'Different Odd & Even Pages' option is activated
-                children: [],
-            }),*/
             },
             footers: {
               default: new Footer({
@@ -118,9 +186,6 @@ export default {
                   docData.getPageNumber(),
                 ],
               }),
-              /* even: new Footer({ // The footer on even pages when the 'Different Odd & Even Pages' option is activated
-                children: [],
-            }),*/
             },
             children: [
               docData.getTitle(),
@@ -205,19 +270,9 @@ export default {
             ],
           },
           
-        ],
+        ],*/
       });
-      //doc.add(docData.getSubTitle("Outils"));
-    /*  doc.addSection({
-        children: [
-          new Paragraph({
-            children: [
-              new TextRun("New Section added"),
-              new TextRun("Hello New Section"),
-            ],
-          }),
-        ],
-      });*/
+
       // To export into a .docx file
       var filen =
         "DossierCompetences-" +
@@ -228,27 +283,9 @@ export default {
         new Date().toLocaleString() +
         ".docx";
       this.saveDocumentToFile(doc, filen); //`vuedoc.docx`);
-      this.savetoPdf(doc);
 
     },
-
-    savetoPdf(docword) {
-      /*unoconv
-        .convert(docword, outputFilePath)
-        .then(result => {
-          console.log(result); // return outputFilePath
-        })
-        .catch(err => {
-          console.log(err);
-        });
-       docConv(doc, './output.pdf', function (err, result) {
-         if (err) {
-           console.log(err);
-         }
-         console.log('result' + result);
-       });*/
-
-    },
+   // },
     saveDocumentToFile(doc, fileName) {
       const mimeType =
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
