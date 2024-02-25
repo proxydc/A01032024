@@ -251,6 +251,13 @@ class DocData {
         return "";
     }
 
+    static pageBreak() {
+            return new Paragraph({
+                text: "",
+                pageBreakBefore: true,
+            });
+    }
+
 
     static getLine(col, text) {
         return new Paragraph({
