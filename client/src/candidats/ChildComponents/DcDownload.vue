@@ -30,7 +30,7 @@ import {
   TableCell,
   BorderStyle,
 } from "docx";
-import docData from "../../DocGeneration/tools/DocData"
+import docData from "../../DocGeneration/tools/DocData";
 const FileSaver = require("file-saver");
 import urldc from "../../_helpers/urllist.js";
 import axios from "axios";
@@ -73,42 +73,42 @@ export default {
       console.log("docdata: " + this.dbDoc);
       let docjs = this.dbDoc.document;
       const table = new Table({
-    rows: [
-    new TableRow({
-      children: [ 
-      new TableCell({
-                    children: [
-      docData.getTitle(),
+        rows: [
+          new TableRow({
+            children: [
+              new TableCell({
+                children: [
+                  docData.getTitle(),
 
-docData.LineBreak(),
-docData.getLine("Nom:     ", docjs.familyname),
-docData.getLineBreak(),
-docData.getLine("Prénom: ", docjs.firstname),
-docData.getLineBreak(),
-docData.getLine("Email:   ", docjs.email),
+                  docData.LineBreak(),
+                  docData.getLine("Nom:     ", docjs.familyname),
+                  docData.getLineBreak(),
+                  docData.getLine("Prénom: ", docjs.firstname),
+                  docData.getLineBreak(),
+                  docData.getLine("Email:   ", docjs.email),
 
-docData.LineBreak(),
-comp.getSubTitle("Compétences fonctionnelles"),
-comp.getComp(docjs.functionalAbilities),
-docData.getHL(),
-docData.LineBreak(),
-              comp.getSubTitle("Compétences techniques"),
-              comp.getComp(docjs.technicalAbilities),
-              docData.getHL(),
+                  docData.LineBreak(),
+                  comp.getSubTitle("Compétences fonctionnelles"),
+                  comp.getComp(docjs.functionalAbilities),
+                  docData.getHL(),
+                  docData.LineBreak(),
+                  comp.getSubTitle("Compétences techniques"),
+                  comp.getComp(docjs.technicalAbilities),
+                  docData.getHL(),
 
-              docData.LineBreak(),
-              certs.getSubTitle("Diplômes / Certifications"),
-              docData.LineBreak(),
-              certs.getCerts(docjs.certifications),
-              docData.getHL(),
+                  docData.LineBreak(),
+                  certs.getSubTitle("Diplômes / Certifications"),
+                  docData.LineBreak(),
+                  certs.getCerts(docjs.certifications),
+                  docData.getHL(),
 
-              docData.LineBreak(),
-              docData.getSubTitle("Langues"),
-              //docData.LineBreak(),
-              lang.getLangues(docjs.languages),
-              docData.getHL(),
+                  docData.LineBreak(),
+                  docData.getSubTitle("Langues"),
+                  //docData.LineBreak(),
+                  lang.getLangues(docjs.languages),
+                  docData.getHL(),
 
-             /* docData.LineBreak(),
+                  /* docData.LineBreak(),
               docData.pageBreak(docjs),
               exppro.getSubTitle("Expériences professionnelles"),
               docData.LineBreak(),
@@ -121,133 +121,128 @@ docData.LineBreak(),
               expperso.getExpPerso(docjs.projectsPerso),
               docData.getHL(),*/
 
-              docData.LineBreak(),
-              docData.getSubTitle("Environnement"),
-              docData.LineBreak(),
-              docData.getLine2(docjs.skills.environments),
-              docData.getHL(),
+                  docData.LineBreak(),
+                  docData.getSubTitle("Environnement"),
+                  docData.LineBreak(),
+                  docData.getLine2(docjs.skills.environments),
+                  docData.getHL(),
 
-              docData.LineBreak(),
-              docData.getSubTitle("Languages"),
-              docData.LineBreak(),
-              docData.getLine2(docjs.skills.languages),
-              docData.getHL(),
+                  docData.LineBreak(),
+                  docData.getSubTitle("Languages"),
+                  docData.LineBreak(),
+                  docData.getLine2(docjs.skills.languages),
+                  docData.getHL(),
 
-              docData.LineBreak(),
-              docData.getSubTitle("SGBD"),
-              docData.LineBreak(),
-              docData.getLine2(docjs.skills.databases),
-              docData.getHL(),
+                  docData.LineBreak(),
+                  docData.getSubTitle("SGBD"),
+                  docData.LineBreak(),
+                  docData.getLine2(docjs.skills.databases),
+                  docData.getHL(),
 
-              docData.LineBreak(),
-              docData.getSubTitle("Outils"),
-              docData.LineBreak(),
-              docData.getLine2(docjs.skills.tools),
-              docData.getHL(),
+                  docData.LineBreak(),
+                  docData.getSubTitle("Outils"),
+                  docData.LineBreak(),
+                  docData.getLine2(docjs.skills.tools),
+                  docData.getHL(),
 
-              docData.LineBreak(),
-              docData.getSubTitle("Systèmes"),
-              docData.LineBreak(),
-              docData.getLine2(docjs.skills.systems),
-              docData.getHL(),
+                  docData.LineBreak(),
+                  docData.getSubTitle("Systèmes"),
+                  docData.LineBreak(),
+                  docData.getLine2(docjs.skills.systems),
+                  docData.getHL(),
 
-              docData.LineBreak(),
-              bref.getSubTitle("En bref"),
-              docData.LineBreak(),
-              docData.getLine2(docjs.bref),
-              docData.getHL(),
-              docData.LineBreak(),
-              docData.pageBreak(),
-
-
-
-
-
-],
-columnSpan: 2,
-borders: {
-        top: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
-          bottom: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
-          left: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
-          right: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
-    },
-                }
-                
-                ),
-       ] }),
-       tbrow.getBlankTableRowPageBreak(),
-       tbrow.getExpTitle("Expériences professionnelles"),
-       tbrow.getBlankTableRowSingleLineBreak(),
-       tbrow.getTwoExpTableRow(0, docjs.experiencesPro),
-        new TableRow({
-            children: [
-                new TableCell({
-                    children: [
-                      docData.LineBreak(),
-              comp.getSubTitle("Compétences fonctionnelles"),
-              comp.getComp(docjs.functionalAbilities),
-              docData.getHL(),
-
-              docData.LineBreak(),
-              comp.getSubTitle("Compétences techniques"),
-              comp.getComp(docjs.technicalAbilities),
-              docData.getHL(),],
-              borders: {
-        right: {
-            style: BorderStyle.DASH_DOT_STROKED,
-            size: 5,
-            color: "889900",
-        },
-        top: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
-          bottom: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
-          left: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
-          //right: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
-       /* bottom: {
-            style: BorderStyle.THICK_THIN_MEDIUM_GAP,
-            size: 5,
-            color: "889900",
-        },*/
-    },
-                }
-                
-                ),
-                new TableCell({
-                    children: [docData.LineBreak(),
-              comp.getSubTitle("Compétences fonctionnelles"),
-              comp.getComp(docjs.functionalAbilities),
-              docData.getHL(),
-
-              docData.LineBreak(),
-              comp.getSubTitle("Compétences techniques"),
-              comp.getComp(docjs.technicalAbilities),
-              docData.getHL(),],
-              borders: {
-        right: {
-            style: BorderStyle.DASH_DOT_STROKED,
-            size: 5,
-            color: "ff0000",
-        },
-        top: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
-          bottom: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
-          left: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
-          //right: {style: BorderStyle.NONE, size: 0, color: "FFFFFF"},
-       /* bottom: {
-            style: BorderStyle.THICK_THIN_MEDIUM_GAP,
-            size: 5,
-            color: "889900",
-        },*/
-    },
-                }),
+                  docData.LineBreak(),
+                  bref.getSubTitle("En bref"),
+                  docData.LineBreak(),
+                  docData.getLine2(docjs.bref),
+                  docData.getHL(),
+                  docData.LineBreak(),
+                  docData.pageBreak(),
+                ],
+                columnSpan: 2,
+                borders: {
+                  top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                  bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                  left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                  right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                },
+              }),
             ],
-        }),
-        tbrow.getBlankTableRowSingleLineBreak(),
-        tbrow.getBlankTableRowSingleLineBreak(),
-        tbrow.getExpTitle("Expériences personnelles"),
-    ],
-});
+          }),
+          tbrow.getBlankTableRowPageBreak(),
+          tbrow.getExpTitle("Expériences professionnelles"),
+          tbrow.getBlankTableRowSingleLineBreak(),
+          tbrow.getTwoExpTableRow(0, docjs.experiencesPro),
+          tbrow.getBlankTableRowSingleLineBreak(),
+          tbrow.getTwoExpTableRow(1, docjs.experiencesPro),
+          tbrow.getBlankTableRowPageBreakReq(2, docjs.experiencesPro),
+
+          tbrow.getTwoExpTableRow(2, docjs.experiencesPro),
+          tbrow.getBlankTableRowSingleLineBreak(),
+          tbrow.getTwoExpTableRow(3, docjs.experiencesPro),
+          tbrow.getBlankTableRowPageBreakReq(4, docjs.experiencesPro),
+
+          tbrow.getTwoExpTableRow(4, docjs.experiencesPro),
+          tbrow.getBlankTableRowSingleLineBreak(),
+          tbrow.getTwoExpTableRow(5, docjs.experiencesPro),
+          tbrow.getBlankTableRowPageBreakReq(6, docjs.experiencesPro),
+
+          tbrow.getTwoExpTableRow(6, docjs.experiencesPro),
+          tbrow.getBlankTableRowSingleLineBreak(),
+          tbrow.getTwoExpTableRow(7, docjs.experiencesPro),
+          tbrow.getBlankTableRowPageBreakReq(8, docjs.experiencesPro),
+
+          tbrow.getTwoExpTableRow(8, docjs.experiencesPro),
+          tbrow.getBlankTableRowSingleLineBreak(),
+          tbrow.getTwoExpTableRow(9, docjs.experiencesPro),
+          tbrow.getBlankTableRowPageBreakReq(10, docjs.experiencesPro),
+
+          tbrow.getTwoExpTableRow(10, docjs.experiencesPro),
+          tbrow.getBlankTableRowSingleLineBreak(),
+          tbrow.getTwoExpTableRow(11, docjs.experiencesPro),
+          tbrow.getBlankTableRowPageBreakReq(12, docjs.experiencesPro),
+
+          tbrow.getTwoExpTableRow(12, docjs.experiencesPro),
+          tbrow.getBlankTableRowSingleLineBreak(),
+          tbrow.getTwoExpTableRow(13, docjs.experiencesPro),
+          tbrow.getBlankTableRowPageBreakReq(14, docjs.experiencesPro),
+          tbrow.getTwoExpTableRow(14, docjs.experiencesPro),
+          tbrow.getBlankTableRowSingleLineBreak(),
+          tbrow.getTwoExpTableRow(15, docjs.experiencesPro),
+          //tbrow.getBlankTableRowPageBreakReq(8, docjs.experiencesPro),
+
+          tbrow.getBlankTableRowPageBreak(),
+          //tbrow.getBlankTableRowSingleLineBreak(),
+          //tbrow.getBlankTableRowSingleLineBreak(),
+          tbrow.getExpTitle("Expériences personnelles"),
+        ],
+      });
+      table.addChildElement( new TableRow({
+            children: [
+              new TableCell({
+                children: [
+                  docData.getTitle(),
+                  docData.LineBreak(),
+                  docData.getLine("Nom:     ", docjs.familyname),
+                  docData.getLineBreak(),
+                  docData.getLine("Prénom: ", docjs.firstname),
+                  docData.getLineBreak(),
+                  docData.getLine("Email:   ", docjs.email),                 
+                ],
+                columnSpan: 2,
+                borders: {
+                  top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                  bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                  left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                  right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                },
+              }),
+            ],
+          }),)
       const doc = new Document({
-        sections: [{
-          properties: {
+        sections: [
+          {
+            properties: {
               titlePage: true,
             },
             headers: {
@@ -256,7 +251,7 @@ borders: {
                 children: [
                   docData.getHeader(docjs.familyname, docjs.firstname),
                   docData.getBufferLogo1stPage(),
-                 // docData.getBufferLogo(),
+                  // docData.getBufferLogo(),
                 ],
               }),
               default: new Header({
@@ -275,7 +270,7 @@ borders: {
                   docData.getFooterC(docjs.familyname, docjs.firstname),
                   docData.LineBreak(),
                   docData.LineBreak(),
-                  
+
                   //docData.getFooterL(),
                   docData.getPageNumber(),
                 ],
@@ -292,8 +287,9 @@ borders: {
                 ],
               }),
             },
-        children: [table],
-    }]
+            children: [table],
+          },
+        ],
 
         /*sections: [
           {
@@ -438,9 +434,8 @@ borders: {
         new Date().toLocaleString() +
         ".docx";
       this.saveDocumentToFile(doc, filen); //`vuedoc.docx`);
-
     },
-   // },
+    // },
     saveDocumentToFile(doc, fileName) {
       const mimeType =
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
