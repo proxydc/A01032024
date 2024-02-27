@@ -51,6 +51,22 @@ class tableRow {
             ],
         });
     }
+    static getBlankTableRowDoubleLineBreak() {
+        return new TableRow({
+            children: [
+                new TableCell({
+                    children: [docData.LineBreak(), docData.LineBreak(), ],
+                    columnSpan: 2,
+                    borders: {
+                        top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                        bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                        left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                        right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                    },
+                }),
+            ],
+        });
+    }
     static getBlankTableRowSingleLineBreak() {
         return new TableRow({
             children: [
@@ -102,16 +118,18 @@ class tableRow {
             });
         }
         return new TableRow({
-            children: [new TableCell({
-                children: [],
-                columnSpan: 2,
-                borders: {
-                    top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                    bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                    left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                    right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                },
-            }), ]
+            children: [
+                new TableCell({
+                    children: [],
+                    columnSpan: 2,
+                    borders: {
+                        top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                        bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                        left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                        right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                    },
+                }),
+            ],
         });
     }
     static getExpTitle(txt) {
@@ -182,17 +200,107 @@ class tableRow {
             });
         }
         return new TableRow({
-            children: [new TableCell({
-                children: [],
-                columnSpan: 2,
-                borders: {
-                    top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                    bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                    left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                    right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                },
-            }), ]
+            children: [
+                new TableCell({
+                    children: [],
+                    columnSpan: 2,
+                    borders: {
+                        top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                        bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                        left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                        right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                    },
+                }),
+            ],
         });
+    }
+
+    static getExpTasksTableCell(tasks) {
+        const tablecell = new TableCell({
+            children: [],
+            borders: {
+                top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+            },
+            width: { size: 68, type: WidthType.PERCENTAGE },
+        });
+        tasks.forEach(element => {
+            tablecell.addChildElement(exppro.getExpTask(element))
+                //tablecell.addChildElement(docData.LineBreak())
+        });
+        return tablecell;
+    }
+
+    static getExpTableRow(pros) {
+        let tablerow = new TableRow({
+            children: [
+                new TableCell({
+                    children: [
+                        exppro.getExpEnt(pros.company),
+                        docData.LineBreak(),
+                        exppro.getExpPost(pros.title),
+                        docData.LineBreak(),
+                        exppro.getExpPeriode(pros.start, pros.end),
+                        docData.LineBreak(),
+                        exppro.getExpEnvTechTitle("Environnement technique : "),
+                        docData.LineBreak(),
+                        exppro.getExpEnvTech(pros.technical_env),
+                        docData.LineBreak(),
+                        docData.LineBreak(),
+                    ],
+                    borders: {
+                        top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                        bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                        left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                        right: {
+                            space: 10,
+                            style: BorderStyle.THREE_D_EMBOSS,
+                            size: 5,
+                            color: "#206643",
+                        },
+                    },
+                    width: { size: 32, type: WidthType.PERCENTAGE },
+                }),
+            ],
+        });
+        tablerow.addChildElement(this.getExpTasksTableCell(pros.tasks));
+        return tablerow;
+    }
+
+    static getProjectsTableRow(pros) {
+        let tablerow = new TableRow({
+            children: [
+                new TableCell({
+                    children: [
+                        exppro.getExpPost(pros.title),
+                        docData.LineBreak(),
+                        exppro.getExpPeriode(pros.period, ''),
+                        docData.LineBreak(),
+                        exppro.getExpEnvTechTitle("Environnement technique : "),
+                        docData.LineBreak(),
+                        exppro.getExpEnvTech(pros.technical_env),
+                        docData.LineBreak(),
+                        docData.LineBreak(),
+                    ],
+                    borders: {
+                        top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                        bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                        left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                        right: {
+                            space: 10,
+                            style: BorderStyle.THREE_D_EMBOSS,
+                            size: 5,
+                            color: "#2c6a5b",
+                        },
+                    },
+                    width: { size: 32, type: WidthType.PERCENTAGE },
+                }),
+            ],
+        });
+        tablerow.addChildElement(this.getExpTasksTableCell(pros.tasks));
+        return tablerow;
     }
 }
 export default tableRow;

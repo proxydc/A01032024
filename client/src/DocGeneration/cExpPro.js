@@ -29,7 +29,7 @@ class cExpPro {
                     },
                 }),
                 new TextRun({
-                    text: "                        " + txt,
+                    text: "                        " + txt.trim(),
                     alignment: AlignmentType.CENTER,
                     heading: HeadingLevel.TITLE,
                     bold: true,
@@ -44,12 +44,13 @@ class cExpPro {
         return new Paragraph({
             children: [
                 new TextRun({
-                    text: ent,
+                    text: ent.trim(),
                     alignment: AlignmentType.LEFT,
-                    heading: HeadingLevel.TITLE,
+                    font: "Century Gothic",
+                    //heading: HeadingLevel.TITLE,
                     bold: true,
                     //underline: true,
-                    size: 28,
+                    size: 22,
                     //color: "#008cba",
                 }),
             ],
@@ -59,35 +60,74 @@ class cExpPro {
         return new Paragraph({
             children: [
                 new TextRun({
-                    text: poste,
+                    text: poste.trim(),
                     alignment: AlignmentType.LEFT,
                     heading: HeadingLevel.TITLE,
                     bold: true,
+                    font: "Century Gothic",
                     //underline: true,
-                    size: 24,
-                    color: "#66bfbf",
+                    size: 20,
+                    color: "#055029",
                 }),
             ],
         });
     }
+    static convertMonth(month) {
+        switch (month) {
+            case '01':
+                return 'Janvier';
+            case '02':
+                return 'Février';
+            case '03':
+                return 'Mars';
+            case '04':
+                return 'Avril';
+            case '05':
+                return 'Mai';
+            case '06':
+                return 'Juin';
+            case '07':
+                return 'Juillet';
+            case '08':
+                return 'Août';
+            case '09':
+                return 'Septembre';
+            case '10':
+                return 'Octobre';
+            case '11':
+                return 'Novembre';
+            case '12':
+                return 'Décembre';
+        }
+        return month;
+    }
+    static getMonthAndYear(dt) {
+        if (dt.length == 10) {
+            return this.convertMonth(dt.substr(5, 2)) + " " + dt.substr(0, 4);
+        }
+        return dt;
+    }
     static getExpPeriode(stdate, enddate) {
-        let periode = '';
+        let periode = "";
         if (stdate != "") {
-            if (enddate != '') {
-                periode = stdate + ' à ' + enddate
+            stdate = this.getMonthAndYear(stdate);
+            if (enddate != "") {
+                enddate = this.getMonthAndYear(enddate);
+                periode = stdate + " à " + enddate;
             } else {
-                periode = "Depuis " + stdate
+                periode = "Depuis " + stdate;
             }
             return new Paragraph({
                 children: [
                     new TextRun({
                         text: periode,
                         alignment: AlignmentType.LEFT,
-                        heading: HeadingLevel.TITLE,
+                        //heading: HeadingLevel.TITLE,
+                        font: "Century Gothic",
                         //bold: true,
                         //underline: true,
-                        size: 24,
-                        color: "#66bfbf",
+                        size: 18,
+                        color: "#066735",
                     }),
                 ],
             });
@@ -101,10 +141,13 @@ class cExpPro {
                     text: title,
                     alignment: AlignmentType.LEFT,
                     heading: HeadingLevel.TITLE,
+                    font: "Century Gothic",
+                    //allCaps: true,
+
                     //bold: true,
                     //underline: true,
-                    size: 24,
-                    color: "#66bfbf",
+                    size: 20,
+                    color: "#066735",
                 }),
             ],
         });
@@ -113,83 +156,121 @@ class cExpPro {
         return new Paragraph({
             children: [
                 new TextRun({
-                    text: ent,
+                    text: ent.trim(),
                     alignment: AlignmentType.LEFT,
                     heading: HeadingLevel.TITLE,
-                    bold: true,
+                    font: "Century Gothic",
+                    //smallCaps: true,
+                    //bold: true,
                     //underline: true,
-                    size: 22,
+                    size: 18,
                     //color: "#008cba",
                 }),
             ],
         });
     }
-    static getExpTask(i, tasks) {
-            if (tasks != '' && tasks.length > i) {
-                return new Table({
-                    rows: [
-                        new TableRow({
-                            children: [
-                                new TableCell({
-                                    children: [
-                                        new Paragraph({
-                                            children: [
-                                                docData.getBulletImg(enumImg.ExpProTask),
-                                            ],
-                                            alignment: AlignmentType.CENTER,
-                                        })
-                                    ],
-                                    borders: {
-                                        top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                                        bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                                        left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                                        right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                                    },
-                                    //verticalAlign: "center",
-                                    //margins: "10px",
-                                    width: { size: 5, type: WidthType.PERCENTAGE },
-                                }),
-                                new TableCell({
-                                    children: [new Paragraph({
+    static getExpTask(task) {
+            return new Table({
+                rows: [
+                    new TableRow({
+                        children: [
+                            new TableCell({
+                                children: [
+                                    new Paragraph({
+                                        children: [docData.getBulletImg(enumImg.ExpProTask)],
+                                        alignment: AlignmentType.CENTER,
+                                    }),
+                                ],
+                                borders: {
+                                    top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                    bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                    left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                    right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                },
+                                //verticalAlign: "center",
+                                //margins: "10px",
+                                width: { size: 400, type: WidthType.DXA },
+                            }),
+                            new TableCell({
+                                children: [
+                                    new Paragraph({
                                         children: [
                                             new TextRun({
-                                                text: tasks[i], //7 spaces,
+                                                text: task.trim(), //7 spaces,
                                                 alignment: AlignmentType.LEFT,
                                                 size: 22,
+                                                // spacing: 10,
                                             }),
-                                        ]
-                                    })],
-                                    borders: {
-                                        top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                                        bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                                        left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                                        right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
-                                    },
-                                    width: { size: 95, type: WidthType.PERCENTAGE },
-                                }),
-
-                            ]
-                        })
-                    ]
-                })
-            }
-            return ''; //new TableCell({ children: [] })'';
+                                        ],
+                                        spacing: {
+                                            line: 350,
+                                        },
+                                    }),
+                                ],
+                                borders: {
+                                    top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                    bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                    left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                    right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                },
+                                width: { size: 6000, type: WidthType.DXA },
+                            }),
+                        ],
+                    }),
+                ],
+            });
         }
         /*static getExpTask(i, tasks) {
-            if (tasks != '' && tasks.length > i) {
-                return new Paragraph({
-                    children: [
-                        docData.getBulletImg(enumImg.ExpProTask),
-                        new TextRun({
-                            text: "       " + tasks[i], //7 spaces,
-                            alignment: AlignmentType.LEFT,
-                            size: 22,
-                        }),
-                    ],
-                });
-            }
-            return '';
-        }*/
+                            if (tasks != "" && tasks.length > i) {
+                                return new Table({
+                                    rows: [
+                                        new TableRow({
+                                            children: [
+                                                new TableCell({
+                                                    children: [
+                                                        new Paragraph({
+                                                            children: [docData.getBulletImg(enumImg.ExpProTask)],
+                                                            alignment: AlignmentType.CENTER,
+                                                        }),
+                                                    ],
+                                                    borders: {
+                                                        top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                                        bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                                        left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                                        right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                                    },
+                                                    //verticalAlign: "center",
+                                                    //margins: "10px",
+                                                    width: { size: 5, type: WidthType.PERCENTAGE },
+                                                }),
+                                                new TableCell({
+                                                    children: [
+                                                        new Paragraph({
+                                                            children: [
+                                                                new TextRun({
+                                                                    text: tasks[i], //7 spaces,
+                                                                    alignment: AlignmentType.LEFT,
+                                                                    size: 22,
+                                                                }),
+                                                            ],
+                                                        }),
+                                                    ],
+                                                    borders: {
+                                                        top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                                        bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                                        left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                                        right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                                                    },
+                                                    width: { size: 95, type: WidthType.PERCENTAGE },
+                                                }),
+                                            ],
+                                        }),
+                                    ],
+                                });
+                            }
+                            return ""; //new TableCell({ children: [] })'';
+                        }*/
+
     static getExpPro(pros) {
         //alert("len: " + pros.length);
         if (pros.length > 0) {
@@ -235,11 +316,11 @@ class cExpPro {
                 cf.addChildElement(docData.LineBreakTR());
                 cf.addChildElement(docData.getSubTitle2("Poste"));
                 /*cf.addChildElement(
-                  new TextRun({
-                    text: "Poste: ",
-                    bold: true,
-                  })
-                );*/
+                                          new TextRun({
+                                            text: "Poste: ",
+                                            bold: true,
+                                          })
+                                        );*/
                 cf.addChildElement(
                     new TextRun({
                         text: pros[i].title,
@@ -250,11 +331,11 @@ class cExpPro {
                 cf.addChildElement(docData.LineBreakTR());
                 cf.addChildElement(docData.getSubTitle2("Entreprise"));
                 /*cf.addChildElement(
-                  new TextRun({
-                    text: "Entreprise: ",
-                    bold: true,
-                  })
-                );*/
+                                          new TextRun({
+                                            text: "Entreprise: ",
+                                            bold: true,
+                                          })
+                                        );*/
                 cf.addChildElement(
                     new TextRun({
                         text: pros[i].company,
