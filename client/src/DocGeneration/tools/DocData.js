@@ -35,7 +35,7 @@ class DocData {
         return new Header({
             // The standard default header on every page or header on odd pages when the 'Different Odd & Even Pages' option is activated
             children: [
-                this.getHeader(docjs.familyname, docjs.firstname),
+                this.getHeader(docjs.familyname, docjs.firstname, docjs.experiencesPro),
                 this.getBufferLogo(),
                 //docData.getHL(),
             ],
@@ -74,6 +74,10 @@ class DocData {
 
         return Math.abs(date.getUTCFullYear() - 1970);
     }
+    static getDiffDays(startDate, endDate) {
+        let ms = endDate.getTime() - startDate.getTime();
+        return Math.round(ms / (1000 * 3600 * 24));
+    }
     static getPosteAndExps(exp) {
         if (exp != "" && exp != null && exp.length > 0) {
             let temp = exp.sort(function(a, b) {
@@ -83,13 +87,22 @@ class DocData {
             });
             let poste = temp[0].title.trim();
             let nbyears = 0;
+            let days = 0;
             temp.forEach((element) => {
-                nbyears += this.getYearDiffWithMonth(
-                    new Date(element.start),
-                    new Date(element.end)
-                );
+                /* nbyears += this.getYearDiffWithMonth(
+                     new Date(element.start),
+                     new Date(element.end)
+                 );*/
+                days += this.getDiffDays(new Date(element.start),
+                    new Date(element.end))
             });
-            return poste + " (" + nbyears + " années d’expériences)";
+            nbyears = Math.round(days / 365)
+            if (nbyears > 0)
+                return poste + " (" + nbyears + " années d’expériences)";
+            return poste;
+            /* if (nbyears > 0)
+                 return poste + " (" + nbyears + " années d’expériences)" + Math.round(days / 365);
+             return poste;*/
         }
         return "";
     }
